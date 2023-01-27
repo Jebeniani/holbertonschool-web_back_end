@@ -9,7 +9,7 @@ class LFUCache(BaseCaching):
     def __init__(self) -> None:
         """Initialize cache attributes"""
         super().__init__()
-        self.last = []
+        self.last = ""
 
     def put(self, key, item):
         """Add an item to the cache"""
