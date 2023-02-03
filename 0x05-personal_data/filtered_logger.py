@@ -2,6 +2,8 @@
 """Regex-ing"""
 import re
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password",)
+
 
 def filter_datum(fields: list[str], redaction: str,
                  message: str, separator: str) -> str:
