@@ -38,6 +38,8 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
+    """the get_logger function uses the logging.getLogger method
+    to get a logger object with the name "user_data"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
