@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """filtered_logger"""
 import re
+import os
 from typing import List
 import logging
+import mysql.connector
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password",)
@@ -51,3 +53,20 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+def get_db():
+    host = os.environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    db_name = os.environ.get("PERSONAL_DATA_DB_NAME")
+
+    if not db_name:
+        raise ValueError("PERSONAL_DATA_DB_NAME environment variable not set")
+
+    return mysql.connector.connect(
+        host=host,
+        user=username,
+        password=password,
+        database=db_name
+    )
