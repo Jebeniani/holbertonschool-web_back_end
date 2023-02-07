@@ -7,5 +7,4 @@ def hash_password(password) -> bytes:
     """ function that expects one string argument name password
     and returns a salted, hashed password, which is a byte string"""
     salt = bcrypt.gensalt()
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return hashed_password
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
