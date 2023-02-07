@@ -71,3 +71,30 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         password=password,
         database=db_name
     )
+
+
+def main():
+    """function will obtain a database connection using get_db and retrieve
+    all rows in the users table and display each row under a filtered format"""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+    for row in rows:
+        name = row[0]
+        email = row[1]
+        phone = row[2]
+        ssn = row[3]
+        password = row[4]
+        ip = row[5]
+        last_login = row[6]
+        user_agent = row[7]
+        print("[HOLBERTON] user_data INFO 2019-11-19 18:37:59,596: name={};" +
+              "email={}; phone={}; ssn={}; password={}; ip={};" +
+              "last_login={}; user_agent={};"
+              .format(name, email, phone, ssn,
+                      password, ip, last_login, user_agent))
+
+
+if __name__ == '__main__':
+    main()
