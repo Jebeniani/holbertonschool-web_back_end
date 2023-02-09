@@ -30,3 +30,9 @@ def stats() -> str:
 def unauthorized() -> str:
     """adding a new endpoint for testing this new error handler"""
     abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """adding a new endpoint for testing this new error handler"""
+    abort(403)
