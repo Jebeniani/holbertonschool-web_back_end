@@ -64,3 +64,11 @@ class BasicAuth(Auth):
                     return user
         except Exception:
             return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Overload current_user - and BOOM!"""
+        header = self.authorization_header(request)
+        base64header = self.extract_base64_authorization_header(header)
+        decoded = self.decode_base64_authorization_header(base64header)
+        user_credentials = self.extract_user_credentials(decoded)
+        return self.user_object_from_credentials(*user_credentials)
