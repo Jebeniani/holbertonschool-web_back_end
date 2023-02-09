@@ -34,6 +34,7 @@ def not_found(error) -> str:
 
 @app.before_request
 def before_request() -> str:
+    """method handler before request"""
     if auth is None:
         return
     excluded_paths = ['/api/v1/status/',
