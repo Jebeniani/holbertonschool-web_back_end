@@ -2,6 +2,7 @@
 """creating a session"""
 from api.v1.auth.auth import Auth
 import uuid
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -23,3 +24,9 @@ class SessionAuth(Auth):
             return None
 
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """return a user instance based on a cooke value"""
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        return User.get(user_id) if user_id else None
