@@ -53,7 +53,8 @@ class DB:
         """user update method"""
         uid = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            if not hasattr(uid, key):
+            if hasattr(uid, key):
+                setattr(uid, key, value)
+            else:
                 raise ValueError
-            setattr(uid, key, value)
         self._session.commit()
