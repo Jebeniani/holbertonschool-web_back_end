@@ -49,7 +49,7 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, user_id: int, **kwargs) -> User:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """user update method"""
         uid = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
