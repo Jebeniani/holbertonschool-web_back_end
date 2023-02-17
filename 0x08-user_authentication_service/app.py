@@ -85,7 +85,7 @@ def get_reset_password_token() -> str:
 def update_password() -> str:
     """updating a user's âssword via PUT request to the end point"""
     email = request.form.get('email')
-    token = request.form.get('token')
+    token = request.form.get('reset_token')
     pwd = request.form.get('new_password')
     try:
         AUTH.update_password(token, pwd)
