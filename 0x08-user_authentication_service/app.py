@@ -86,7 +86,7 @@ def update_password() -> str:
     """updating a user's âssword via PUT request to the end point"""
     email = request.form.get('email')
     token = request.form.get('token')
-    pwd = request.form.get('password')
+    pwd = request.form.get('new_password')
     try:
         AUTH.update_password(token, email, pwd)
     except Exception:
