@@ -1,26 +1,30 @@
 #!/usr/bin/env python3
 """Parameterizing a unit test"""
 import unittest
-from parameterized import parameterized
-from utils import access_nested_map
+from mock import Mock, patch
+from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(unittest.TestCase):
 
-    @parameterized.expand([
-        ({"a": 1}, ("a",), 1),
-        ({"a": {"b": 2}}, ("a",), {"b": 2}),
-        ({"a": {"b": 2}}, ("a", "b"), 2)
-    ])
-    def test_access_nested_map(self, nested_map, path, expected_output):
-        self.assertEqual(access_nested_map(nested_map, path), expected_output)
+    def setUp(self):
+        self.mock_get = Mock()
+        self.test_url = 'http://example.com'
+        self.test_payload = {'payload': True}
 
-    @parameterized.expand([
-        ({}, ("a",)),
-        ({"a": 1}, ("a", "b")),
-    ])
-    def test_access_nested_map_exception(self, nested_map, path):
-        """ method to test that a KeyError is raised properly """
-        with self.assertRaises(KeyError) as error:
-            access_nested_map(nested_map, path)
-        self.assertEqual(error.exception.args[0], path[-1])
+    def test_access_nested_map(self):
+        """Tests access_nested_map function"""
+        nested_map = {'a': {'b': {'c': 1}}}
+
+        self.assertEqual(access_nested_map(nested_map, ['a', 'b', 'c']), 1)
+        self.assertEqual(access_nested_map(nested_map, ['a', 'b']), {'c': 1})
+        self.assertRaises(KeyError, access_nested_map,
+                          nested_map, ['d', 'e', 'f'])
+
+    def test_get_json(self):
+        """Tests get_json function"""
+        self.mock_get.return_value.json.return_value = {"payload": True}
+        with patch('requests.get', self.mock_get):
+            response = get_json(self.test_url)
+
+        self.assertEqual(response, self.test_payload)
