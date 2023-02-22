@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Parameterizing a unit test"""
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -39,3 +39,24 @@ class TestAccessNestedMap(unittest.TestCase):
             mock_get.return_value = test_payload
             result = get_json(test_url)
             self.assertEqual(result, test_payload)
+
+    class TestMemoize(unittest.TestCase):
+        """TESTCASE"""
+
+        def test_memoize(self):
+            """TESTCASE"""
+            class TestClass:
+                """_summary_
+                """
+
+                def a_method(self):
+                    return 42
+
+                @memoize
+                def a_property(self):
+                    """property"""
+                    return self.a_method()
+            with patch.object(TestClass, 'a_method') as mock_method:
+                instance = TestClass()
+                result1 = instance.a_property
+                result2 = instance.a_property
