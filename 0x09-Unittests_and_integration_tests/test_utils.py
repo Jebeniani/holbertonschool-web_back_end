@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Parameterizing a unit test"""
 import unittest
-from mock import Mock
+from unittest.mock import Mock
 from parameterized import parameterized
 from utils import access_nested_map, get_json
 
