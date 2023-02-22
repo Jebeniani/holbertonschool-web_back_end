@@ -38,10 +38,3 @@ class TestAccessNestedMap(unittest.TestCase):
         self.assertEqual(result, test_payload)
 
     mock_get = Mock()
-
-
-test_url = 'http://test.com'
-test_payload = {'payload': True}
-
-if __name__ == '__main__':
-    unittest.main()
