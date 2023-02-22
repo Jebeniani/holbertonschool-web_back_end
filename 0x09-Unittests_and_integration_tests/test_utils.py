@@ -7,13 +7,14 @@ from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(unittest.TestCase):
-
+    """TESTCASE"""
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
     def test_access_nested_map(self, nested_map, path, expected_output):
+        """test method"""
         self.assertEqual(access_nested_map(nested_map, path), expected_output)
 
     @parameterized.expand([
@@ -27,6 +28,7 @@ class TestAccessNestedMap(unittest.TestCase):
         self.assertEqual(error.exception.args[0], path[-1])
 
     def test_get_json(self, mock_get, test_url, test_payload):
+        """test function get_json"""
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         mock_get.return_value = mock_response
@@ -34,3 +36,12 @@ class TestAccessNestedMap(unittest.TestCase):
         result = get_json(test_url)
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+    mock_get = Mock()
+
+
+test_url = 'http://test.com'
+test_payload = {'payload': True}
+
+if __name__ == '__main__':
+    unittest.main()
