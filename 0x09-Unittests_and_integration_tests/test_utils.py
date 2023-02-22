@@ -60,3 +60,6 @@ class TestAccessNestedMap(unittest.TestCase):
                 instance = TestClass()
                 result1 = instance.a_property
                 result2 = instance.a_property
+
+                self.assertEqual(result1, result2)
+                mock_method.assert_called_once()
