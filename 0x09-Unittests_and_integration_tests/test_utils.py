@@ -27,7 +27,7 @@ class TestAccessNestedMap(unittest.TestCase):
             access_nested_map(nested_map, path)
         self.assertEqual(error.exception.args[0], path[-1])
 
-    def test_get_json(self, mock_get, test_url, test_payload):
+    def TestGetJson(self, mock_get, test_url, test_payload):
         """test function get_json"""
         mock_response = Mock()
         mock_response.json.return_value = test_payload
