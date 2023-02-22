@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Parameterizing a unit test"""
-from unittest import TestCase
+import unittest
 from unittest.mock import patch
 from parameterized import parameterized
 from client import GithubOrgClient
 
 
-class TestGithubOrgClient(TestCase):
+class TestGithubOrgClient(unittest.TestCase):
     """Class to test the GithubOrgClient class"""
 
     @parameterized.expand([
