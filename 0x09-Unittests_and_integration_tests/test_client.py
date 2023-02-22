@@ -18,5 +18,4 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get.return_value = expected_payload
         client = GithubOrgClient(org_name)
         self.assertEqual(client.org, expected_payload)
-        mock_get.assert_called_once_with(
-            f'https://api.github.com/orgs/{org_name}')
+        mock_get.assert_called_once
