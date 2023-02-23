@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder='templates')
 babel = Babel(app)
 
 
-class Config:
+class Config(object):
     """Config Class"""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
