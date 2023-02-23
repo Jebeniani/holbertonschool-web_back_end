@@ -2,8 +2,9 @@
 """
 Get locale from request
 """
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
+from babel import negotiate_locale
 
 app = Flask(__name__, template_folder='templates')
 babel = Babel(app)
@@ -29,7 +30,7 @@ def index():
 def get_locale():
     """Returns the best matched locale based on the languages 
     requested by the client"""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return negotiate_locale('LANGUAGES', request.accept_languages.best_match(app.config['LANGUAGES']))
 
 
 if __name__ == '__main__':
