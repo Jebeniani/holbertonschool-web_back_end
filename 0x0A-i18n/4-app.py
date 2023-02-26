@@ -2,9 +2,8 @@
 """
 Force locale with URL parameter
 """
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request
 from flask_babel import Babel
-from babel import negotiate_locale
 
 app = Flask(__name__, template_folder='templates')
 babel = Babel(app)
@@ -26,23 +25,14 @@ def index():
     return render_template('4-index.html')
 
 
+@babel.localeselector
 def get_locale():
     """Returns the best matched locale based on the languages
     requested by the client"""
-    if 'locale' in g:
-        return g.locale
-
     locale = request.args.get('locale')
-    if locale and locale in 'LANGUAGES':
-        g.locale = locale
+    if locale:
         return locale
-
-    best_match = negotiate_locale(
-        'LANGUAGES', request.accept_languages.best_match('LANGUAGES'))
-
-    g.locale = best_match
-
-    return best_match
+    return request.accept_languages.best_match('LANGUAGES')
 
 
 if __name__ == '__main__':
