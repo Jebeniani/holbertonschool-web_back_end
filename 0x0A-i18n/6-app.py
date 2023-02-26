@@ -44,6 +44,7 @@ def get_user():
         return None
 
 
+@babel.localeselector
 def get_locale():
     """Returns the best matched locale based on the languages
     requested by the client"""
