@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from uuid import uuid4
 import redis
+import functools
 from typing import Union, Callable, Optional
 
 
@@ -44,3 +45,17 @@ class Cache:
         from Redis and attempts to convert it to an integer
         """
         return self.get(key, fn=lambda d: int(d))
+
+    def count_calls(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            key = func.__qualname__
+            self._redis.incr(key)
+            return func(self, *args, **kwargs)
+        return wrapper
+
+    @count_calls
+    def store(self, data: Union[str, bytes, int, float]) -> str:
+        key = str(uuid4())
+        self._redis.set(key, data)
+        return key
