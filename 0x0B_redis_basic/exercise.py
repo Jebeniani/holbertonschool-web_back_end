@@ -46,14 +46,14 @@ class Cache:
         """
         return self.get(key, fn=lambda d: int(d))
 
-    def count_calls(func: Callable) -> Callable:
+    def count_calls(method: Callable) -> Callable:
         """Decorator that counts the number of times a method is called
         and stores the count in Redis"""
-        @functools.wraps(func)
+        @functools.wraps(method)
         def wrapper(self, *args, **kwargs):
-            key = func.__qualname__
+            key = method.__qualname__
             self._redis.incr(key)
-            return func(self, *args, **kwargs)
+            return method(self, *args, **kwargs)
         return wrapper
 
     @count_calls
