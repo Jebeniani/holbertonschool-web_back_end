@@ -1,3 +1,5 @@
+
+-- creating a table users with specified requirements
 DELIMITER $$
 CREATE PROCEDURE AddBonus(
     IN user_id INT,
