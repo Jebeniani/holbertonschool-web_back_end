@@ -1,0 +1,4 @@
+// cript that deletes all documents with a specification in the collection school:
+db.school.deleteMany(
+    { "name": "Holberton school" }
+)
