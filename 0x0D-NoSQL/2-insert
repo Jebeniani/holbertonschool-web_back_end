@@ -1,4 +1,4 @@
 // script that inserts a document in the collection
-db.inventory.insertOne(
+db.school.insert(
  { name: "Holberton school"}   
 )
