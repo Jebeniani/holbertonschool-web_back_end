@@ -1,0 +1,4 @@
+// script that inserts a document in the collection
+db.school.find(
+ {}   
+)
