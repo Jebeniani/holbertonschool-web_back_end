@@ -1,36 +1,34 @@
+/* eslint-disable jest/expect-expect */
+/* eslint-disable jest/prefer-expect-assertions */
+/* eslint-disable indent */
 const assert = require('assert');
 const calculateNumber = require('./1-calcul');
 
-describe('calculateNumber', function() {
-    describe('when type is SUM', function() {
-        it('should return the sum of two rounded numbers', function() {
-            assert.equal(calculateNumber('SUM', 2.6, 3.8), 7);
-            assert.equal(calculateNumber('SUM', 2.4, 3.1), 6);
-            assert.equal(calculateNumber('SUM', 5.5, 4.2), 10);
-            assert.equal(calculateNumber('SUM', 7.9, 1.1), 9);
-        });
+describe('calculateNumber', () => {
+    it('returns rounded sum with SUM', () => {
+        assert.strictEqual(calculateNumber('SUM', 1, 3), 4);
+        assert.strictEqual(calculateNumber('SUM', 1.6, 3), 5);
+        assert.strictEqual(calculateNumber('SUM', 1.2, 3.8), 5);
+        assert.strictEqual(calculateNumber('SUM', -1, -3), -4);
+        assert.strictEqual(calculateNumber('SUM', -1.4, -3.6), -5);
     });
-
-    describe('when type is SUBTRACT', function() {
-        it('should return the difference between two rounded numbers', function() {
-            assert.equal(calculateNumber('SUBTRACT', 5.5, 4.2), 1);
-            assert.equal(calculateNumber('SUBTRACT', 7.9, 1.1), 7);
-            assert.equal(calculateNumber('SUBTRACT', 3.5, 3.1), 0);
-        });
+    it('returns rounded sum with SUBTRACT', () => {
+        assert.strictEqual(calculateNumber('SUBTRACT', 1, 3), -2);
+        assert.strictEqual(calculateNumber('SUBTRACT', 1.6, 3), -1);
+        assert.strictEqual(calculateNumber('SUBTRACT', 1.2, 3.8), -3);
+        assert.strictEqual(calculateNumber('SUBTRACT', -1, -3), 2);
+        assert.strictEqual(calculateNumber('SUBTRACT', -1.4, -3.6), 3);
     });
-
-    describe('when type is DIVIDE', function() {
-        it('should return the rounded quotient of two rounded numbers', function() {
-            assert.equal(calculateNumber('DIVIDE', 5.5, 4.2), 1);
-            assert.equal(calculateNumber('DIVIDE', 7.9, 1.1), 7);
-            assert.equal(calculateNumber('DIVIDE', 3.5, 3.1), 1);
-            assert.equal(calculateNumber('DIVIDE', 3.5, 0), 'Error');
-        });
+    it('returns rounded sum with DIVIDE', () => {
+        assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
     });
-
-    describe('when type is invalid', function() {
-        it('should return Error', function() {
-            assert.equal(calculateNumber('INVALID', 2.6, 3.8), 'Error');
-        });
+    it('returns error string when DIVIDE by 0', () => {
+        assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
+    });
+    it('should throw error if NaN passed', () => {
+        assert.throws(() => calculateNumber('SUM', NaN, 3), '[Function: TypeError]');
+    });
+    it('should throw error if invalid type', () => {
+        assert.throws(() => calculateNumber('invalid', 2, 3), '[Function: TypeError]');
     });
 });
