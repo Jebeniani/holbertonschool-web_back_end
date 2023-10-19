@@ -14,6 +14,5 @@ app.get('/students', async (req, res) => {
     res.send(`${title}${error.message}`);
   }
 });
-
 app.listen(port);
 module.exports = app;
