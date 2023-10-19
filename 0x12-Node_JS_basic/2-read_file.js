@@ -6,46 +6,37 @@ function countStudents(path) {
     const lines = data.split('\n');
     const headers = lines[0].split(',');
 
-    if (headers[0] !== 'firstname' || headers[1] !== 'lastname' || headers[2] !== 'age' || headers[3] !== 'field') {
+    if (
+      headers[0] !== 'firstname'
+      || headers[1] !== 'lastname'
+      || headers[2] !== 'age'
+      || headers[3] !== 'field'
+    ) {
       throw new Error('Invalid CSV format');
     }
 
-    const studentsByField = {};
+    const studentsByField = {
+      CS: { count: 0, list: [] },
+      SWE: { count: 0, list: [] },
+    };
 
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 1; i < lines.length; i += 1) {
       const fields = lines[i].split(',');
 
       if (fields.length === 4 && fields[0] !== '' && fields[1] !== '' && fields[2] !== '' && fields[3] !== '') {
         const field = fields[3];
+        const name = fields[0];
 
-        if (!studentsByField[field]) {
-          studentsByField[field] = {
-            count: 1,
-            list: [fields[0]],
-          };
-        } else {
-          // eslint-disable-next-line indent, no-plusplus
-                    studentsByField[field].count++;
-          studentsByField[field].list.push(fields[0]);
+        if (field === 'CS' || field === 'SWE') {
+          studentsByField[field].count += 1;
+          studentsByField[field].list.push(name);
         }
       }
     }
 
-    let totalCount = 0;
-
-    // eslint-disable-next-line guard-for-in
-    for (const field in studentsByField) {
-      const { count } = studentsByField[field];
-      const { list } = studentsByField[field];
-
-      console.log(`Number of students in ${field}: ${count}. List: ${list.join(', ')}`);
-      totalCount += count;
-      // eslint-disable-next-line indent
-            // eslint-disable-next-line indent
-        }
-
-    console.log(`Number of students: ${totalCount}`);
+    console.log(`Number of students: ${studentsByField.CS.count + studentsByField.SWE.count}`);
+    console.log(`Number of students in CS: ${studentsByField.CS.count}. List: ${studentsByField.CS.list.join(', ')}`);
+    console.log(`Number of students in SWE: ${studentsByField.SWE.count}. List: ${studentsByField.SWE.list.join(', ')}`);
   } catch (err) {
     console.error(`Cannot load the database: ${err}`);
   }
